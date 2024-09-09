@@ -2,9 +2,7 @@ PATH
   remote: .
   specs:
     rulers (0.0.1)
-      minitest
       rack (~> 2.2)
-      rack-test
 
 GEM
   remote: https://rubygems.org/
@@ -21,6 +19,7 @@ PLATFORMS
 
 DEPENDENCIES
   minitest (~> 5.16)
+  rack-test
   rake (~> 13.0)
   rulers!
 
