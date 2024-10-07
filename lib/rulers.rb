@@ -9,11 +9,27 @@ module Rulers
 
   class Application
     def call(env)
-      klass, act = get_controller_and_action(env)
-      controller = klass.new(env)
-      text = controller.send(act)
-      [200, {'Content-Type' => 'text/html'},
-      [text]]
+      if env["PATH_INFO"] == "/favicon.ico"
+        return [404, {"Content-Type" => "text/html"}, []]
+      end
+      if env["PATH_INFO"] == "/"
+        # klass = Object.const_get('QuotesController')
+        # controller = QuotesController.new(env)
+        # text = controller.a_quote
+
+        [201, {'Content-Type' => 'text/html', 'Location' => '/quotes/a_quote'}, []]
+      else
+        klass, act = get_controller_and_action(env)
+        controller = klass.new(env)
+
+        begin
+          text = controller.send(act)
+        rescue
+          text = "This is a unique error"
+        end
+
+        [200, {"Content-Type" => "text/html"}, [text]]
+      end 
     end
   end
 
