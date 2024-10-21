@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "rulers/version"
-require_relative "rulers/routing"
+require "rulers/version"
+require "rulers/routing"
+require "rulers/util"
+require "rulers/dependencies"
 require "rulers/array"
 
 module Rulers
@@ -17,7 +19,11 @@ module Rulers
         # controller = QuotesController.new(env)
         # text = controller.a_quote
 
-        [201, {'Content-Type' => 'text/html', 'Location' => '/quotes/a_quote'}, []]
+        # debugger
+
+        [200, {"Content-Type" => "text/html"}, File.open("public/index.html").readlines]
+
+        # [301, {'Content-Type' => 'text/html', 'Location' => '/quotes/a_quote'}, []]
       else
         klass, act = get_controller_and_action(env)
         controller = klass.new(env)
