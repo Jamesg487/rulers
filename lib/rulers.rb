@@ -5,6 +5,7 @@ require "rulers/routing"
 require "rulers/util"
 require "rulers/dependencies"
 require "rulers/array"
+require "rulers/controller"
 
 module Rulers
   class Error < StandardError; end
@@ -21,9 +22,9 @@ module Rulers
 
         # debugger
 
-        [200, {"Content-Type" => "text/html"}, File.open("public/index.html").readlines]
+        # [200, {"Content-Type" => "text/html"}, File.open("public/index.html").readlines]
 
-        # [301, {'Content-Type' => 'text/html', 'Location' => '/quotes/a_quote'}, []]
+        [301, {'Content-Type' => 'text/html', 'Location' => '/quotes/a_quote'}, []]
       else
         klass, act = get_controller_and_action(env)
         controller = klass.new(env)
@@ -36,16 +37,6 @@ module Rulers
 
         [200, {"Content-Type" => "text/html"}, [text]]
       end 
-    end
-  end
-
-  class Controller
-    def initialize(env)
-      @env = env
-    end
-
-    def env
-      @env
     end
   end
 end
