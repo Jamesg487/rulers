@@ -3,6 +3,7 @@ PATH
   specs:
     rulers (0.0.2)
       erubis
+      multi_json
       rack (~> 2.2)
 
 GEM
@@ -17,6 +18,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     minitest (5.25.1)
+    multi_json (1.15.0)
     psych (5.1.2)
       stringio
     rack (2.2.10)

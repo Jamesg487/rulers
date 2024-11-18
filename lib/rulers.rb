@@ -6,12 +6,13 @@ require "rulers/util"
 require "rulers/dependencies"
 require "rulers/array"
 require "rulers/controller"
+require "rulers/file_model"
 
 module Rulers
   def self.framework_root
     __dir__
   end
-  
+
   class Error < StandardError; end
 
   class Application
