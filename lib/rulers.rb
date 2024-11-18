@@ -8,6 +8,10 @@ require "rulers/array"
 require "rulers/controller"
 
 module Rulers
+  def self.framework_root
+    __dir__
+  end
+  
   class Error < StandardError; end
 
   class Application
