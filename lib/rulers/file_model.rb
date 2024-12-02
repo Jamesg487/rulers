@@ -12,12 +12,21 @@ module Rulers
         @hash = MultiJson.load(obj)
       end
 
+      def self.find(id)
+        begin
+          FileModel.new("db/quotes/#{id}.json")
+        rescue
+          return nil
+        end  
+      end
+
       def self.all
         files = Dir["db/quotes/*.json"]
         files.map { |f| FileModel.new f }
       end
 
       def self.create(attrs)
+        # look into pattern matching to replace below
         hash = {}
         hash["submitter"] = attrs["submitter"] || ""
         hash["quote"] = attrs["quote"] || ""
@@ -47,14 +56,6 @@ module Rulers
 
       def []=(name, value)
         @hash[name.to_s] = value
-      end
-
-      def self.find(id)
-        begin
-          FileModel.new("db/quotes/#{id}.json")
-        rescue
-          return nil
-        end  
       end
     end
   end
