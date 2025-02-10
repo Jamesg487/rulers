@@ -43,4 +43,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest"
   spec.add_dependency "erubis"
   spec.add_dependency "multi_json"
+  spec.add_dependency "sqlite3"
 end
