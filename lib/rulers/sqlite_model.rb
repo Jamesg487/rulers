@@ -26,6 +26,29 @@ module Rulers
         @schema
       end
 
+      def method_missing(name, *args)
+        if @hash[name.to_s]
+          self.class.class_eval do
+            define_method(name) do
+              self[name]
+            end
+          end
+          return self.send(name)
+        end
+
+        if name.to_s[-1..-1] == "="
+          col_name = name.to_s[0..-2]
+          self.class.class_eval do
+            define_method(name) do |value|
+              self[col_name] = value
+            end
+          end
+          return self.send(name, args[0])
+        end
+
+        super
+      end
+
       def self.to_sql(val)
         case val
         when NilClass
@@ -51,7 +74,7 @@ module Rulers
 INSERT INTO #{table} (#{keys.join ","})
   VALUES (#{vals.join ","});
 SQL
-        data = Hash[keys.zip vals]
+        data = Hash[keys.zip(vals)]
         sql = "SELECT last_insert_rowid();"
         data["id"] = DB.execute(sql)[0][0]
         self.new data
@@ -68,7 +91,7 @@ SQL
 select #{schema.keys.join ","} from #{table}
 where id = #{id};
 SQL
-        data = Hash[schema.keys.zip row[0]]
+        data = Hash[schema.keys.zip(row[0])]
         self.new data
       end
 
