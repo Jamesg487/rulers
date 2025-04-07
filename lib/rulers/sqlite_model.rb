@@ -1,5 +1,6 @@
 require "sqlite3"
 require "rulers/util"
+require "debug"
 
 DB = SQLite3::Database.new "test.db"
 
@@ -30,7 +31,7 @@ module Rulers
         if @hash[name.to_s]
           self.class.class_eval do
             define_method(name) do
-              self[name]
+              @hash[name.to_s]
             end
           end
           return self.send(name)
@@ -40,7 +41,8 @@ module Rulers
           col_name = name.to_s[0..-2]
           self.class.class_eval do
             define_method(name) do |value|
-              self[col_name] = value
+              debugger
+              @hash[col_name] = value
             end
           end
           return self.send(name, args[0])
